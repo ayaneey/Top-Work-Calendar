@@ -26,4 +26,18 @@ $(document).ready(function () {
   $("#hour15 .description").val(localStorage.getItem("hour15"));
   $("#hour16 .description").val(localStorage.getItem("hour16"));
   $("#hour17 .description").val(localStorage.getItem("hour17"));
+
+  //   function - track time
+  function timeTracker() {
+    var currentHour = moment().hour();
+  }
+
+  // Loop over time blocks
+  $(".time-block").each(function () {
+    var blockHour = parseInt($(this).attr("id").split("hour")[1]);
+    console.log(blockHour, currentHour);
+
+  // Double check if moved past this time
+
+
 });
