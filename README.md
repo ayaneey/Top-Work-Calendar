@@ -9,7 +9,7 @@ A straight-forward work calendar that allows users to input and save events for 
 - CSS
 - JavaScript (and JQuery)
 
-Third Party Assets:
+<b>Third Party Assets:</b>
 - Moments Js (https://momentjs.com/)
 
 ## Github 
