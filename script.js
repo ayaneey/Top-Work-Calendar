@@ -1,21 +1,21 @@
 // A function to execute after the DOM is ready.
 $(document).ready(function () {
   // Display current date and time
-  var currentDay = moment().format("dddd, MMM Do YYYY");
+  var currentDay = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
   $("#currentDay").html(currentDay);
 
   // Assign event listener to btn
-
-  ".saveBtn".on("click", function () {
+  $(".saveBtn").on("click", function () {
+    console.log(this);
     var text = $(this).siblings(".description").val();
     var time = $(this).parent().attr("id");
-    console.log(this);
+
+    // Save items in localStorage
+    localStorage.setItem(text, time);
   });
 
-  // Save items in localStorage
-  localStorage.setItem(time, text);
-
   //Retrieve items from localStorage
+
   $("#hour8 .description").val(localStorage.getItem("hour8"));
   $("#hour9 .description").val(localStorage.getItem("hour9"));
   $("#hour10 .description").val(localStorage.getItem("hour10"));
@@ -28,16 +28,38 @@ $(document).ready(function () {
   $("#hour17 .description").val(localStorage.getItem("hour17"));
 
   //   function - track time
-  function timeTracker() {
+  function hourTracker() {
+    // get current numbers of hours
     var currentHour = moment().hour();
+    // loop over time blocks
+    $(".time-block").each(function () {
+      var blockHour = parseInt($(this).attr("id").split("hour")[1]);
+      console.log(blockHour, currentHour);
+
+      // to check the time
+      if (blockHour < currentHour) {
+        $(this).addClass("past");
+        $(this).removeClass("future");
+        $(this).removeClass("present");
+      } else if (blockHour === currentHour) {
+        $(this).removeClass("present");
+        $(this).removeClass("past");
+        $(this).addClass("future");
+      } else {
+        $(this).removeClass("present");
+        $(this).removeClass("past");
+        $(this).addClass("future");
+      }
+    });
+
+    let nowHour = currentDay;
+    $(".description").addClass(function () {
+      return +this.id === nowHour
+        ? "present"
+        : +this.id < nowHour
+        ? "past"
+        : "future";
+    });
   }
-
-  // Loop over time blocks
-  $(".time-block").each(function () {
-    var blockHour = parseInt($(this).attr("id").split("hour")[1]);
-    console.log(blockHour, currentHour);
-
-  // Double check if moved past this time
-
-
+  hourTracker();
 });
